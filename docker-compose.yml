@@ -1,0 +1,35 @@
+services:
+  links:
+    build: .
+    command: node src/links.js
+    init: true
+    ports:
+      - "9231:3000"
+    volumes:
+      - ./src:/app/src
+
+  analytics:
+    build: .
+    command: node src/analytics.js
+    init: true
+    volumes:
+      - ./src:/app/src
+
+  shortener:
+    build: .
+    command: node src/shortener.js
+    init: true
+    ports:
+      - "8231:3000"
+    environment:
+      LINKS_URL: http://links:3000
+      ANALYTICS_URL: http://analytics:3000
+      PUBLIC_URL: http://localhost:8231
+      PROTECTION: ${PROTECTION:-none}
+      FALLBACK: ${FALLBACK:-none}
+    volumes:
+      - ./src:/app/src
+      - ./scripts:/app/scripts
+    depends_on:
+      - links
+      - analytics

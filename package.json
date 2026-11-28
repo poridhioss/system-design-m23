@@ -1,0 +1,9 @@
+{
+  "name": "url-shortener",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "express": "5.1.0",
+    "opossum": "10.0.0"
+  }
+}
